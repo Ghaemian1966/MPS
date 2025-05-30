@@ -1,0 +1,24 @@
+
+services:
+  web:
+    build: ./backend
+    command: python manage.py runserver 0.0.0.0:1375
+    volumes:
+      - ./backend/:/usr/src/LST2/backend/
+    ports:
+      - 1375:1375
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+  db:
+    image: postgres:17
+    volumes:
+      - postgres_data:/Library/PostgreSQL/17/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Password1
+      - POSTGRES_DB=LSTDB
+  
+volumes:
+  postgres_data:
